@@ -1,19 +1,18 @@
-// Replace with your Firebase project settings
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "APP_ID"
+  apiKey: "AIzaSyCnYFbO9pbcdUB_BsjCx_V42ZVoRU3cYPo",
+  authDomain: "yatzy-c2308.firebaseapp.com",
+  databaseURL: "https://yatzy-c2308-default-rtdb.firebaseio.com",
+  projectId: "yatzy-c2308",
+  storageBucket: "yatzy-c2308.firebasestorage.app",
+  messagingSenderId: "28328420169",
+  appId: "1:28328420169:web:180c9d1f1aa6e08fc97098"
 };
 
-// Initialize
-const appFb = firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-// Helpers for DB paths
-function roomRef(code){ return db.ref('rooms/'+code); }
-function profileRef(uid){ return db.ref('profiles/'+uid); }
-function genCode(){ return Math.random().toString(36).slice(2,7).toUpperCase(); }
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
