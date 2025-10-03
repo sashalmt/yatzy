@@ -35,4 +35,5 @@ input{background:#0e1425;color:var(--ink);border:1px solid #2b3356;border-radius
 .scorecard td.locked{color:var(--muted)}
 .grand{font-weight:800}
 .overlay{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.55);backdrop-filter:blur(2px)}
+.overlay.hidden { display: none; }
 .tiny{opacity:.7;margin-top:18px;text-align:center}
