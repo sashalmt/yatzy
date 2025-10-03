@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yatzy Online</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script defer src="firebase.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1>Yatzy <span class="badge">Online</span></h1>
+      <div class="room-info">
+        <span id="roomCodeLabel"></span>
+        <button id="copyRoomBtn" class="ghost">Copy Room Link</button>
+      </div>
+    </header>
+
+    <section id="lobby" class="card">
+      <h2>Play with a friend</h2>
+      <p>Create a room and share the link, or join a friend's room.</p>
+      <div class="form-row">
+        <input id="playerName" placeholder="Your nickname" maxlength="20">
+      </div>
+      <div class="buttons">
+        <button id="createRoomBtn">Create Room</button>
+        <input id="joinCode" placeholder="Enter room code">
+        <button id="joinRoomBtn" class="primary">Join Room</button>
+      </div>
+      <p class="hint">Both players must open this page. Creator starts the game.</p>
+    </section>
+
+    <section id="table" class="hidden">
+      <div class="players card">
+        <div class="player" id="p1">
+          <div>
+            <div class="name" id="p1Name">Player 1</div>
+            <div class="meta" id="p1Stats">Wins: 0 • Avg: 0</div>
+          </div>
+          <div class="score" id="p1Total">0</div>
+        </div>
+        <div class="player" id="p2">
+          <div>
+            <div class="name" id="p2Name">Player 2</div>
+            <div class="meta" id="p2Stats">Wins: 0 • Avg: 0</div>
+          </div>
+          <div class="score" id="p2Total">0</div>
+        </div>
+      </div>
+
+      <div class="board">
+        <div class="dice-area card">
+          <div id="diceTray" class="dice-tray"></div>
+          <div class="controls">
+            <button id="rollBtn" class="primary">Roll</button>
+            <span id="rollsLeft">3</span> rolls left
+            <button id="endTurnBtn" class="ghost">End Turn</button>
+          </div>
+          <p class="hint small">Click a die to hold/unhold. You get up to 3 rolls per turn.</p>
+        </div>
+
+        <div class="scorecard card">
+          <table id="scoreTable">
+            <thead>
+              <tr><th>Category</th><th id="meCol">Me</th><th id="opCol">Opponent</th></tr>
+            </thead>
+            <tbody id="scoreBody"></tbody>
+            <tfoot>
+              <tr><td>Upper Total</td><td id="meUpper">0</td><td id="opUpper">0</td></tr>
+              <tr><td>Bonus (≥63 → +35)</td><td id="meBonus">0</td><td id="opBonus">0</td></tr>
+              <tr><td>Lower Total</td><td id="meLower">0</td><td id="opLower">0</td></tr>
+              <tr class="grand"><td>Grand Total</td><td id="meGrand">0</td><td id="opGrand">0</td></tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="overlay" class="overlay hidden">
+      <div class="modal card">
+        <h3 id="overlayTitle">Game Over</h3>
+        <p id="overlayText"></p>
+        <div class="buttons">
+          <button id="newGameBtn" class="primary">New Game</button>
+          <button id="leaveBtn" class="ghost">Leave Room</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="tiny">
+      <span>Built for GitHub Pages • Uses Firebase Realtime DB for match-making</span>
+    </footer>
+  </div>
+</body>
+</html>
