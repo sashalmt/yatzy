@@ -442,7 +442,7 @@ async function newGame(){
     overlay.classList.add('hidden');   // hide the modal
     showGameUI();
     startListeners();
-    history.replaceState(null, '', #${code});
+    history.replaceState(null, '', `#${code}`);
     return;
   }
 
