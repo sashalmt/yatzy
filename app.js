@@ -438,8 +438,16 @@ const p1 = room.players.p1.name;
 const p2 = room.players.p2.name;
 const u1 = room.players.p1.uid;
 const u2 = room.players.p2.uid;
-await roomRef(roomCode).set(defaultRoom({ p1Name: p1, p2Name: p2, p1Uid: u1, p2Uid: u2 }));
-localStorage.removeItem(localCommitKey(roomCode, myUid));
+await roomRef(roomCode).set(
+defaultRoom({ p1Name: p1, p2Name: p2, p1Uid: u1, p2Uid: u2 })
+);
+localStorage.removeItem(localCommitKey(roomCode, myUid)); 
+// Hide overlay immediately so the UI feels alive
+overlay.classList.add('hidden');
+// Reset local dice/held to match
+localDice = [1,1,1,1,1];
+localHeld = [false,false,false,false,false];
+renderDice();
 }
 
 async function leaveRoom(){
