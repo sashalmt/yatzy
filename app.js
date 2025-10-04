@@ -67,8 +67,8 @@ function scoreCounts(dice){
 }
 function isSmallStraight(dice){
   const s = new Set(dice);
-  return ( [1,2,3,4].every(n=>s.has(n)) && s.has(5) ) ||
-         ( [2,3,4,5].every(n=>s.has(6)) );
+  // any 4-in-a-row: 1-4, 2-5, 3-6
+  return [ [1,2,3,4], [2,3,4,5], [3,4,5,6] ].some(seq => seq.every(n => s.has(n)));
 }
 function isLargeStraight(dice){
   const s = new Set(dice);
@@ -233,8 +233,9 @@ function applyRoom(room){
     overlay.classList.remove('hidden');
     overlayTitle.textContent = "Game Over";
     const who = room.winner;
-    overlayText.textContent = (who === 'draw') ? "It's a draw!" :
-      ${room.players[who].name} wins!;
+    overlayText.textContent = (who === 'draw')
+      ? "It's a draw!"
+      : ${room.players[who].name} wins!;
   }else{
     overlay.classList.add('hidden');
   }
@@ -342,7 +343,6 @@ async function chooseCategory(cat, value){
 
   await ref.update({ scores, held, rollsLeft, dice, turn: finished?room.turn:nextTurn, finished, winner });
 
-  // If game just finished, commit stats for each client based on winner
   if(finished){
     await commitStatsIfNeeded({ ...room, scores, finished, winner });
   }
