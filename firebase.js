@@ -1,9 +1,3 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCnYFbO9pbcdUB_BsjCx_V42ZVoRU3cYPo",
   authDomain: "yatzy-c2308.firebaseapp.com",
@@ -15,4 +9,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+//const app = initializeApp(firebaseConfig);
+const appFb = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Helpers used by app.js
+function roomRef(code){ return db.ref('rooms/' + code); }
+function profileRef(uid){ return db.ref('profiles/' + uid); }
+function genCode(){ return Math.random().toString(36).slice(2,7).toUpperCase(); }
