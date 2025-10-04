@@ -430,24 +430,42 @@ history.replaceState(null, '', `#${code}`);
 }
 
 async function newGame(){
-if(!roomCode) return;
-const snap = await roomRef(roomCode).get();
-if(!snap.exists()) return;
-const room = snap.val();
-const p1 = room.players.p1.name;
-const p2 = room.players.p2.name;
-const u1 = room.players.p1.uid;
-const u2 = room.players.p2.uid;
-await roomRef(roomCode).set(
-defaultRoom({ p1Name: p1, p2Name: p2, p1Uid: u1, p2Uid: u2 })
-);
-localStorage.removeItem(localCommitKey(roomCode, myUid)); 
-// Hide overlay immediately so the UI feels alive
-overlay.classList.add('hidden');
-// Reset local dice/held to match
-localDice = [1,1,1,1,1];
-localHeld = [false,false,false,false,false];
-renderDice();
+  // If no room exists yet, create one now (so the button always does something)
+  if(!roomCode){
+    const name = (document.getElementById('playerName')?.value || "").trim() || "Player";
+    await ensureMyProfile(name);
+    const code = genCode();
+    const room = defaultRoom({ p1Name: name, p1Uid: myUid, p2Name: "Waiting…", p2Uid: null });
+    await roomRef(code).set(room);
+    myId = 'p1';
+    roomCode = code;
+    overlay.classList.add('hidden');   // hide the modal
+    showGameUI();
+    startListeners();
+    history.replaceState(null, '', #${code});
+    return;
+  }
+
+  // Normal reset path when a room already exists
+  const snap = await roomRef(roomCode).get();
+  if(!snap.exists()) return;
+  const room = snap.val();
+  const p1 = room.players.p1.name;
+  const p2 = room.players.p2.name;
+  const u1 = room.players.p1.uid;
+  const u2 = room.players.p2.uid;
+
+  await roomRef(roomCode).set(
+    defaultRoom({ p1Name: p1, p2Name: p2, p1Uid: u1, p2Uid: u2 })
+  );
+
+  localStorage.removeItem(localCommitKey(roomCode, myUid));
+
+  // Make the UI feel immediate
+  overlay.classList.add('hidden');
+  localDice = [1,1,1,1,1];
+  localHeld = [false,false,false,false,false];
+  renderDice();
 }
 
 async function leaveRoom(){
