@@ -9,8 +9,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-//const appFb = firebase.initializeApp(firebaseConfig);
+const appFb = firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 // Helpers used by app.js
